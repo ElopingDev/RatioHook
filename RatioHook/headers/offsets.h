@@ -1,5 +1,5 @@
 #pragma once
-namespace netvars {
+namespace netvars2 {
 	constexpr ::std::ptrdiff_t cs_gamerules_data = 0x0;
 	constexpr ::std::ptrdiff_t m_ArmorValue = 0x117CC;
 	constexpr ::std::ptrdiff_t m_Collision = 0x320;

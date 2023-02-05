@@ -144,11 +144,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="headers\funcs.h" />
+    <ClInclude Include="headers\datatable.h" />
+    <ClInclude Include="headers\hash.h" />
+    <ClInclude Include="headers\interfaces.h" />
+    <ClInclude Include="headers\netvar.h" />
     <ClInclude Include="headers\offsets.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dllmain.cpp" />
     <ClCompile Include="src\funcs.cpp" />
+    <ClCompile Include="src\netvar.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

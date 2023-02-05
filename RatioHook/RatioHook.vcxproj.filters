@@ -21,12 +21,27 @@
     <ClInclude Include="headers\funcs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="headers\interfaces.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\datatable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\hash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\netvar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\funcs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\netvar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

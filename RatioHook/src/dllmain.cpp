@@ -4,73 +4,70 @@
 #include <iostream>
 #include <cstdint>
 #include <thread>
-#include "../headers/offsets.h"
 #include <cstdio>
 #include <iomanip>
-#include "../headers/funcs.h"
 #include <chrono>
+
+#include "../headers/netvar.h"
+#include "../headers/offsets.h"
+#include "../headers/funcs.h"
+#include "../headers/interfaces.h"
 
 void HackThread(const HMODULE hModule) noexcept
 
 {
-    const auto baseaddress = reinterpret_cast<std::uintptr_t>(GetModuleHandle("client.dll")); // baseaddress declared here so it can be accessed anywhere
     std::uintptr_t localPlayer = 0;
     int fov = 0;
-
-    std::cout << std::endl << std::endl;
-    std::cout << std::setw(50) << std::left << R"(
- /\_/\
-( o.o ) RatioHook
- > ^ < 
-)" << std::endl;
-    std::cout << std::endl << std::endl;
-    std::cout << "Hold space to BunnyHop" << std::endl;
-    std::cout << "Press minus to change FOV" << std::endl;
-    std::cout << "Reveal Radar toggled." << std::endl;
+    client = GetInterface<IClient>("VClient018", "client.dll");
+    entityList = GetInterface<IClientEntityList>("VClientEntityList003", "client.dll");
+    const auto baseaddress = reinterpret_cast<std::uintptr_t>(GetModuleHandle("client.dll")); // baseaddress declared here so it can be accessed anywhere
+    
+    SetupNetvars();
+    GUICon();
 
     while (!GetAsyncKeyState(VK_END))
     {
+        // // // // // // //  
+        // Variables checks that needs to be updated all the time
+        const auto localPlayer = *reinterpret_cast<std::uintptr_t*>(baseaddress + signatures::dwLocalPlayer);
+        if (!localPlayer)
+        {
+            continue;
+        }
+        const auto health = *reinterpret_cast<std::int32_t*>(localPlayer + netvars2::m_iHealth);
+        if (!health)
+        {
+            continue;
+        }
+        const auto flags = *reinterpret_cast<std::int32_t*>(localPlayer + netvars2::m_fFlags);
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
-    const auto localPlayer = *reinterpret_cast<std::uintptr_t*>(baseaddress + signatures::dwLocalPlayer);
-    std::this_thread::sleep_for(std::chrono::milliseconds(1));
-
-    if (!localPlayer)
-    {
-        continue;
-    }
-
-    const auto health = *reinterpret_cast<std::int32_t*>(localPlayer + netvars::m_iHealth);
-
-    if (!health)
-    {
-        continue;
-    }
-    revealRadar(baseaddress);
-         const auto flags = *reinterpret_cast<std::int32_t*>(localPlayer + netvars::m_fFlags);
-         if (GetAsyncKeyState(VK_SPACE))
-         {
-             (flags & (1 << 0)) ? *reinterpret_cast<std::uintptr_t*>(baseaddress + signatures::dwForceJump) = 6 : *reinterpret_cast<std::uintptr_t*>(baseaddress + signatures::dwForceJump) = 4;
-         }
+        // Loading hacks functions
+        RevealRadar();
+        if (GetAsyncKeyState(VK_SPACE))
+        {
+             BunnyHop(flags, baseaddress);
+        }
           
         if (GetAsyncKeyState(VK_SUBTRACT))
         {
-            std::cout << "Enter desired FOV Value" << std::endl;
-            std::cin >> fov;
-            *reinterpret_cast<std::uintptr_t*>(localPlayer + netvars::m_iDefaultFOV) = fov;
+            FovChanger(fov, localPlayer);
+        }
+
+        if (GetAsyncKeyState(VK_INSERT) & 1)
+        {
+            PrintHP();
         }
 
     }
-
+   std::cout << "Uninjected. You can now close this console" << std::endl;
    FreeConsole();
    FreeLibraryAndExitThread(hModule, 0);
     
 }
     
 // EntryPoint
-BOOL APIENTRY DllMain(HMODULE hModule,
-    DWORD  ul_reason_for_call,
-    LPVOID lpReserved
-)
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
 {
     {
         if (ul_reason_for_call == 1)
@@ -89,7 +86,6 @@ BOOL APIENTRY DllMain(HMODULE hModule,
                 MessageBoxA(NULL, "RatioHook Injected", "Injection", NULL);
                 CloseHandle(thread);
         }
-
         return TRUE;
     }
 }
