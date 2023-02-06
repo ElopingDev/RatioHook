@@ -8,6 +8,7 @@ void FovChanger(int fov, uintptr_t localPlayer);
 void PrintHP();
 void GUICon();
 
+
 template <typename T>
 T* GetInterface(const char* name, const char* library)
 {

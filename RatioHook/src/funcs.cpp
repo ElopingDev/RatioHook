@@ -56,3 +56,4 @@ void GUICon() {
     std::cout << "Press minus to change FOV" << std::endl;
     std::cout << "Reveal Radar toggled." << std::endl;
 }
+

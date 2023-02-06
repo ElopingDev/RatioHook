@@ -7,6 +7,7 @@ class CEntity
 public:
 	NETVAR(Spotted, "CBaseEntity->m_bSpotted", bool)
 	NETVAR(GetHealth, "CBaseEntity->m_iHealth", int)
+	NETVAR(Flags, "CBaseEntity->m_fFlags", int)
 		const int& GetHP() const noexcept
 	{
 		return *reinterpret_cast<int*>(std::uintptr_t(this) + 0x100);
