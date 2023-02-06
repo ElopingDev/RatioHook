@@ -1,5 +1,5 @@
 #include "../headers/netvar.h"
-#include "../headers/interfaces.h"
+#include "../valve/centity.h"
 
 #include <ctype.h>
 #include <format>

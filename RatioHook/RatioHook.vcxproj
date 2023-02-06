@@ -151,14 +151,20 @@
     <ClInclude Include="ext\minhook\hde\table64.h" />
     <ClInclude Include="ext\minhook\MinHook.h" />
     <ClInclude Include="ext\minhook\trampoline.h" />
-    <ClInclude Include="headers\funcs.h" />
+    <ClInclude Include="headers\hacks.h" />
     <ClInclude Include="headers\datatable.h" />
+    <ClInclude Include="headers\globals.h" />
     <ClInclude Include="headers\hash.h" />
     <ClInclude Include="headers\hooks.h" />
     <ClInclude Include="headers\interfaces.h" />
+    <ClInclude Include="valve\centity.h" />
+    <ClInclude Include="headers\memory.h" />
     <ClInclude Include="headers\netvar.h" />
     <ClInclude Include="headers\offsets.h" />
-    <ClInclude Include="headers\usercmd.h" />
+    <ClInclude Include="valve\cvector.h" />
+    <ClInclude Include="valve\cusercmd.h" />
+    <ClInclude Include="valve\iengineclient.h" />
+    <ClInclude Include="valve\ienginetraceclient.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ext\minhook\buffer.c" />
@@ -167,8 +173,9 @@
     <ClCompile Include="ext\minhook\hook.c" />
     <ClCompile Include="ext\minhook\trampoline.c" />
     <ClCompile Include="src\dllmain.cpp" />
-    <ClCompile Include="src\funcs.cpp" />
+    <ClCompile Include="src\hacks.cpp" />
     <ClCompile Include="src\hooks.cpp" />
+    <ClCompile Include="src\interfaces.cpp" />
     <ClCompile Include="src\netvar.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

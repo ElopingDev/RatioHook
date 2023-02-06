@@ -11,70 +11,32 @@
 #include "../headers/hooks.h"
 #include "../headers/netvar.h"
 #include "../headers/offsets.h"
-#include "../headers/funcs.h"
-#include "../headers/interfaces.h"
+#include "../headers/hacks.h"
+#include "../valve/centity.h"
 #include "../ext/minhook/MinHook.h"
-#include "../headers/usercmd.h"
-//static void* g_Client = GetInterface<IClient>("VClient018", "client.dll");
-//static void* g_ClientMode = **reinterpret_cast<void***>((*reinterpret_cast<unsigned int**>(g_Client))[10] + 5);
-//using CreateMove = bool(__thiscall*)(void*, float, UserCmd*);
-//static CreateMove CreateMoveOriginal = nullptr;
-
-
+#include "../valve/cusercmd.h"
 
 DWORD WINAPI HackThread(LPVOID instance)
 {
-   // MH_CreateHook((*static_cast<void***>(g_ClientMode))[24], &CreateMoveHook, reinterpret_cast<void**>(&CreateMoveOriginal));
-    //SetupMoveHook(CreateMoveHook, g_ClientMode);
-    InitHooks();
-
     std::uintptr_t localPlayer = 0;
     int fov = 0;
-    client = GetInterface<IClient>("VClient018", "client.dll");
-    entityList = GetInterface<IClientEntityList>("VClientEntityList003", "client.dll");
+    client;
+    entityList;
     const auto baseaddress = reinterpret_cast<std::uintptr_t>(GetModuleHandle("client.dll")); // baseaddress declared here so it can be accessed anywhere
-
-    SetupNetvars();
+    
+    interfaces::SetupInterfaces();
+    hooks::InitHooks();
+   // SetupNetvars();
     GUICon();
 
     while (!GetAsyncKeyState(VK_END))
     {
-        // // // // // // //  
-        // Variables checks that needs to be updated all the time
-        const auto localPlayer = *reinterpret_cast<std::uintptr_t*>(baseaddress + signatures::dwLocalPlayer);
-        if (!localPlayer)
-        {
-            continue;
-        }
-        const auto health = *reinterpret_cast<std::int32_t*>(localPlayer + netvars2::m_iHealth);
-        if (!health)
-        {
-            continue;
-        }
-        const auto flags = *reinterpret_cast<std::int32_t*>(localPlayer + netvars2::m_fFlags);
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
-
-        // Loading hacks functions
-        //RevealRadar();
-        if (GetAsyncKeyState(VK_SPACE))
-        {
-            
-        }
-          
-        if (GetAsyncKeyState(VK_SUBTRACT))
-        {
-            FovChanger(fov, localPlayer);
-        }
-
-        if (GetAsyncKeyState(VK_INSERT) & 1)
-        {
-            PrintHP();
-        }
-
+        
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
     }
+
    std::cout << "Uninjected. You can now close this console" << std::endl;
-   CleanupHooks();
-   MH_Uninitialize;
+   hooks::CleanupHooks();
    FreeConsole();
    FreeLibraryAndExitThread(static_cast<HMODULE>(instance), 0);
     

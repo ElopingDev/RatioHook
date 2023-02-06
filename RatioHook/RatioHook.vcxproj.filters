@@ -18,10 +18,10 @@
     <ClInclude Include="headers\offsets.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="headers\funcs.h">
+    <ClInclude Include="headers\hacks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="headers\interfaces.h">
+    <ClInclude Include="valve\centity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\datatable.h">
@@ -57,10 +57,28 @@
     <ClInclude Include="ext\minhook\trampoline.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="headers\usercmd.h">
+    <ClInclude Include="valve\cusercmd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\hooks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\memory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\globals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="valve\cvector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="valve\iengineclient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="valve\ienginetraceclient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\interfaces.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -68,7 +86,7 @@
     <ClCompile Include="src\dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\funcs.cpp">
+    <ClCompile Include="src\hacks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\netvar.cpp">
@@ -90,6 +108,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\hooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\interfaces.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
