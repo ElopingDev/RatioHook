@@ -161,10 +161,14 @@
     <ClInclude Include="headers\memory.h" />
     <ClInclude Include="headers\netvar.h" />
     <ClInclude Include="headers\offsets.h" />
+    <ClInclude Include="valve\ckeyvalues.h" />
+    <ClInclude Include="valve\cmatrix.h" />
     <ClInclude Include="valve\cvector.h" />
     <ClInclude Include="valve\cusercmd.h" />
     <ClInclude Include="valve\iengineclient.h" />
     <ClInclude Include="valve\ienginetraceclient.h" />
+    <ClInclude Include="valve\imaterialsystem.h" />
+    <ClInclude Include="valve\istudiorenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ext\minhook\buffer.c" />
@@ -176,6 +180,7 @@
     <ClCompile Include="src\hacks.cpp" />
     <ClCompile Include="src\hooks.cpp" />
     <ClCompile Include="src\interfaces.cpp" />
+    <ClCompile Include="src\memory.cpp" />
     <ClCompile Include="src\netvar.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

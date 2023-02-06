@@ -3,6 +3,8 @@
 #include "../valve/centity.h"
 #include "../valve/iengineclient.h"
 #include "../valve/ienginetraceclient.h"
+#include "../valve/istudiorenderer.h"
+#include "../valve/imaterialsystem.h"
 
 namespace interfaces
 {
@@ -14,6 +16,8 @@ namespace interfaces
 	inline IClientEntityList* entityList = nullptr;
 	inline IEngineClient* engine = nullptr;
 	inline IEngineTraceClient* trace = nullptr;
+	inline IMaterialSystem* materialSystem = nullptr;
+	inline IStudioRender* studioRender = nullptr;
 
 	inline void* client = nullptr;
 	inline void* clientMode = nullptr;

@@ -1,5 +1,6 @@
 #pragma once
 #include "interfaces.h"
+#include "../valve/cmatrix.h"
 
 namespace hooks
 {

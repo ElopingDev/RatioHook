@@ -49,6 +49,7 @@ void GUICon() {
     std::cout << std::endl << std::endl;
     std::cout << "Hold space to BunnyHop" << std::endl;
     std::cout << "Hold MouseButton4 to triggerbot." << std::endl;
+    std::cout << "Chams Enabled." << std::endl;
     //std::cout << "Press minus to change FOV" << std::endl;
    // std::cout << "Reveal Radar toggled." << std::endl;
 }
