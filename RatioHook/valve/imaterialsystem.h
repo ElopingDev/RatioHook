@@ -16,6 +16,12 @@ public:
 	{
 		memory::Call<void>(this, 29, flag, on);
 	}
+
+	void AddRef() noexcept
+	{
+		memory::Call<void>(this, 1);
+	}
+
 };
 
 class IMaterialSystem

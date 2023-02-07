@@ -23,7 +23,8 @@ DWORD WINAPI HackThread(LPVOID instance)
     client;
     entityList;
     const auto baseaddress = reinterpret_cast<std::uintptr_t>(GetModuleHandle("client.dll")); // baseaddress declared here so it can be accessed anywhere
-    
+
+    memory::Setup();
     interfaces::SetupInterfaces();
     hooks::InitHooks();
    // SetupNetvars();

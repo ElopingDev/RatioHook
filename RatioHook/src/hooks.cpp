@@ -4,6 +4,8 @@
 #include "../valve/centity.h"
 #include "../headers/offsets.h"
 #include "../headers/interfaces.h"
+#include <intrin.h>
+#include <chrono>
 
 void hooks::InitHooks()
 {
@@ -12,6 +14,8 @@ void hooks::InitHooks()
     std::cout << interfaces::studioRender << std::endl;
     std::cout << interfaces::materialSystem << std::endl;
     
+    // AllocKeyValuesMemory hook
+    MH_CreateHook(memory::Get(interfaces::keyValuesSystem, 2), &AllocKeyValuesMemory, reinterpret_cast<void**>(&AllocKeyValuesMemoryOriginal));
 
     //CreateMove
     MH_CreateHook(memory::Get(interfaces::clientMode, 24), &CreateMove, reinterpret_cast<void**>(&CreateMoveOriginal));
@@ -27,6 +31,17 @@ void hooks::InitHooks()
     MH_EnableHook(MH_ALL_HOOKS);
 }
 
+void* __stdcall hooks::AllocKeyValuesMemory(const std::int32_t size) noexcept
+{
+    // if function is returning to speficied addresses, return nullptr to "bypass"
+    if (const std::uint32_t address = reinterpret_cast<std::uint32_t>(_ReturnAddress());
+        address == (memory::allocKeyValuesEngine) ||
+        address == (memory::allocKeyValuesClient))
+        return nullptr;
+
+    // return original
+    return AllocKeyValuesMemoryOriginal(interfaces::keyValuesSystem, size);
+}
 
 bool __stdcall hooks::CreateMove(float frameTime, UserCmd* cmd) noexcept
 {
@@ -65,7 +80,7 @@ bool __stdcall hooks::CreateMove(float frameTime, UserCmd* cmd) noexcept
 
             if (!trace.entity->IsAlive() || trace.entity->GetTeam() == globals::localPlayer->GetTeam())
                 return false;
-
+            std::chrono::milliseconds duration(200);
             cmd->buttons |= IN_ATTACK;
             return false;
         }

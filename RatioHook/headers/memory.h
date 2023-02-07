@@ -4,6 +4,9 @@
 
 namespace memory
 {
+	// call once to scan for all patterns
+	void Setup() noexcept;
+
 	template <typename Return, typename ... Args>
 	constexpr Return Call(void* _this, std::uintptr_t index, Args ... args) noexcept
 	{
@@ -25,9 +28,9 @@ namespace memory
 	std::uint8_t* PatternScan(const char* moduleName, const char* pattern) noexcept;
 
 	// return addresses
-	inline std::uint8_t* allocKeyValuesClient = nullptr;
-	inline std::uint8_t* allocKeyValuesEngine = nullptr;
-	inline std::uint8_t* insertIntoTree = nullptr;
+	inline std::uintptr_t allocKeyValuesClient = 0;
+	inline std::uintptr_t allocKeyValuesEngine = 0;
+	inline std::uintptr_t insertIntoTree = 0;
 
 	// functions
 	inline std::uint8_t* keyValuesFromString = nullptr;

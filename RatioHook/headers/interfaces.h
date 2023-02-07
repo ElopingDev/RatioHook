@@ -21,4 +21,9 @@ namespace interfaces
 
 	inline void* client = nullptr;
 	inline void* clientMode = nullptr;
+
+
+
+	inline void* keyValuesSystem = nullptr;
+
 }

@@ -7,6 +7,11 @@ namespace hooks
 	void InitHooks();
 	void CleanupHooks();
 
+	// bypass return address checks (thx osiris)
+	using AllocKeyValuesMemoryFn = void* (__thiscall*)(void*, const std::int32_t) noexcept;
+	inline AllocKeyValuesMemoryFn AllocKeyValuesMemoryOriginal;
+	void* __stdcall AllocKeyValuesMemory(const std::int32_t size) noexcept;
+
 	using CreateMoveFunction = bool(__thiscall*)(void*, float, UserCmd*) noexcept;
 	inline CreateMoveFunction CreateMoveOriginal = nullptr;
 	bool __stdcall CreateMove(float frameTime, UserCmd* cmd) noexcept;
