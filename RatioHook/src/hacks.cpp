@@ -1,4 +1,3 @@
-
 #include <windows.h>
 #include <iostream>
 #include <iomanip>
@@ -33,7 +32,7 @@ void PrintHP() {
 
         if (!entity)
             continue;
-    std::cout << " Entity " << i << " health = " << entity->GetHP() << '\n';
+        std::cout << " Entity " << i << " health = " << entity->GetHP() << '\n';
     }
     std::cout << "============" << std::endl;
     std::cout << "Printed entites health" << std::endl;
@@ -53,4 +52,3 @@ void GUICon() {
     //std::cout << "Press minus to change FOV" << std::endl;
    // std::cout << "Reveal Radar toggled." << std::endl;
 }
-

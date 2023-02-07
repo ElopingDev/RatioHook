@@ -13,7 +13,7 @@ void hooks::InitHooks()
     std::cout << interfaces::clientMode << std::endl;
     std::cout << interfaces::studioRender << std::endl;
     std::cout << interfaces::materialSystem << std::endl;
-    
+
     // AllocKeyValuesMemory hook
     MH_CreateHook(memory::Get(interfaces::keyValuesSystem, 2), &AllocKeyValuesMemory, reinterpret_cast<void**>(&AllocKeyValuesMemoryOriginal));
 
@@ -62,7 +62,7 @@ bool __stdcall hooks::CreateMove(float frameTime, UserCmd* cmd) noexcept
         }
 
         if (!GetAsyncKeyState(VK_XBUTTON2))
-            return false; 
+            return false;
         else {
             CVector eyePosition;
             globals::localPlayer->GetEyePosition(eyePosition);
@@ -130,4 +130,3 @@ void hooks::CleanupHooks()
     MH_RemoveHook(MH_ALL_HOOKS);
     MH_Uninitialize();
 }
-

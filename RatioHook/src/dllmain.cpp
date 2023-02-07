@@ -27,7 +27,8 @@ DWORD WINAPI HackThread(LPVOID instance)
     memory::Setup();
     interfaces::SetupInterfaces();
     hooks::InitHooks();
-   // SetupNetvars();
+    //netvars::Setup();
+
     GUICon();
 
     while (!GetAsyncKeyState(VK_END))
@@ -49,7 +50,6 @@ BOOL APIENTRY DllMain(HINSTANCE instance, DWORD  ul_reason_for_call, LPVOID lpRe
     {
         if (ul_reason_for_call == 1)
         {
-            MessageBoxA(NULL, "Attempting to Initialize Minhook", "Injection", NULL);
             MH_Initialize();
             AllocConsole();
             FILE* console_in;
@@ -77,4 +77,3 @@ BOOL APIENTRY DllMain(HINSTANCE instance, DWORD  ul_reason_for_call, LPVOID lpRe
 
     }
 }
-

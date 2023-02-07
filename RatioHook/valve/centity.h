@@ -4,6 +4,7 @@
 #include "../headers/netvar.h"
 #include "../headers/memory.h"
 #include "cvector.h"
+
 class CEntity
 {
 public:
@@ -32,14 +33,20 @@ public:
 		memory::Call<void, CVector&>(this, 346, aimPunchOut);
 	}
 
+	//constexpr CClientClass* GetClientClass() noexcept
+//	{
+	//	return memory::Call<CClientClass*>(this + 0x8, 2);
+	//}
+
 	// Netvars
 	NETVAR(Spotted, "CBaseEntity->m_bSpotted", bool)
-	NETVAR(GetHealth, "CBaseEntity->m_iHealth", int)
-	NETVAR(Flags, "CBaseEntity->m_fFlags", int)
+		NETVAR(GetHealth, "CBaseEntity->m_iHealth", int)
+		NETVAR(Flags, "CBaseEntity->m_fFlags", int)
 		const int& GetHP() const noexcept
 	{
 		return *reinterpret_cast<int*>(std::uintptr_t(this) + 0x100);
 	}
+	
 };
 
 class IClientEntityList
@@ -106,4 +113,3 @@ public:
 
 inline IClientEntityList* entityList = nullptr;
 inline IClient* client = nullptr;
-
