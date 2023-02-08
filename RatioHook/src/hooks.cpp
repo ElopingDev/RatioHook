@@ -113,7 +113,7 @@ bool __stdcall hooks::CreateMove(float frameTime, UserCmd* cmd) noexcept
 
             if (!trace.entity->IsAlive() || trace.entity->GetTeam() == globals::localPlayer->GetTeam())
                 return false;
-            std::chrono::milliseconds duration(200);
+
             cmd->buttons |= IN_ATTACK;
             return false;
         }
@@ -123,8 +123,7 @@ bool __stdcall hooks::CreateMove(float frameTime, UserCmd* cmd) noexcept
 
 void __stdcall hooks::DrawModel(void* results, const CDrawModelInfo& info, CMatrix3x4* bones, float* flexWeights, float* flexDelayedWeights, const CVector& modelOrigin, const std::int32_t flags) noexcept
 {
-    //globals::localPlayer&&
-   // && globals::localPlayer->IsAlive()
+    
     globals::localPlayer = interfaces::entityList->GetEntityFromIndex(interfaces::engine->GetLocalPlayerIndex());
     if (globals::localPlayer && info.renderable && hacks::chams && globals::localPlayer->IsAlive())
     {
