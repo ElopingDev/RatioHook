@@ -17,6 +17,8 @@ namespace hooks
 	inline CreateMoveFunction CreateMoveOriginal = nullptr;
 	bool __stdcall CreateMove(float frameTime, UserCmd* cmd) noexcept;
 
+	
+
 	constexpr void* VirtualFunction(void* thisptr, size_t index) noexcept
 	{
 		return (*static_cast<void***>(thisptr))[index];
@@ -30,6 +32,7 @@ namespace hooks
 	inline ResetFn ResetOriginal = nullptr;
 	HRESULT __stdcall Reset(IDirect3DDevice9* device, D3DPRESENT_PARAMETERS* params) noexcept;
 
+	
 
 	using DrawModelFn = void(__thiscall*)(
 		void*,

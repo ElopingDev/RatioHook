@@ -216,6 +216,7 @@ void gui::Render() noexcept
 				ImGui::Checkbox("Chams", &hacks::chams);
 				if (ImGui::IsItemHovered())
 					ImGui::SetTooltip("Change enemy models color");
+				ImGui::Checkbox("Through Walls", &hacks::walls);
 				ImGui::ColorEdit3("Chams Visible Color", hacks::chamsColorVisible);
 				ImGui::ColorEdit3("Chams Hidden Color", hacks::chamsColorHidden);
 				ImGui::EndTabItem();
@@ -233,7 +234,7 @@ void gui::Render() noexcept
 				ImGui::Checkbox("Triggerbot", &hacks::triggerbot);
 				if (ImGui::IsItemHovered())
 					ImGui::SetTooltip("Automatically shoots when an enemy is in your crosshair");
-				ImGui::SliderInt("Triggerbot Delay", &hacks::triggerdelay, 0, 5000);
+				ImGui::SliderInt("Triggerbot Delay", &hacks::triggerDelay, 0, 5000);
 				ImGui::EndTabItem();
 			}
 

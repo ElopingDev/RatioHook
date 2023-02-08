@@ -12,6 +12,7 @@ void interfaces::SetupInterfaces() noexcept
     clientMode = **reinterpret_cast<void***>((*reinterpret_cast<unsigned int**>(client))[10] + 5);
     studioRender = GetInterface<IStudioRender>("VStudioRender026", "studiorender.dll");
     materialSystem = GetInterface<IMaterialSystem>("VMaterialSystem080", "materialsystem.dll");
+   // modelRender = GetInterface<IVModelRender>("VEngineModel016", "engine.dll");
 
     // get the exported KeyValuesSystem function
     if (const HINSTANCE handle = GetModuleHandle("vstdlib.dll"))

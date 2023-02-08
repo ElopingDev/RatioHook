@@ -120,6 +120,12 @@
     <ClInclude Include="headers\gui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="valve\vmatrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="valve\QAngle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dllmain.cpp">

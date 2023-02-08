@@ -42,7 +42,7 @@ DWORD WINAPI HackThread(LPVOID instance)
    std::cout << "Uninjected. You can now close this console" << std::endl;
    hooks::CleanupHooks();
    gui::Destroy();
-  // FreeConsole();
+   FreeConsole();
    FreeLibraryAndExitThread(static_cast<HMODULE>(instance), 0);
     
 }
@@ -54,11 +54,11 @@ BOOL APIENTRY DllMain(HINSTANCE instance, DWORD  ul_reason_for_call, LPVOID lpRe
         if (ul_reason_for_call == 1)
         {
             MH_Initialize();
-          //  AllocConsole();
-          //  FILE* console_in;
-          //  FILE* console_out;
-          //  freopen_s(&console_out, "CONOUT$", "w", stdout);
-          //  freopen_s(&console_in, "CONIN$", "r", stdin);
+            AllocConsole();
+            FILE* console_in;
+            FILE* console_out;
+            freopen_s(&console_out, "CONOUT$", "w", stdout);
+            freopen_s(&console_in, "CONIN$", "r", stdin);
             HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
             SetConsoleTextAttribute(hStdout, 0x0C);
             DisableThreadLibraryCalls(instance);
