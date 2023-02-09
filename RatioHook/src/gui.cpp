@@ -234,7 +234,7 @@ void gui::Render() noexcept
 				ImGui::Checkbox("Triggerbot", &hacks::triggerbot);
 				if (ImGui::IsItemHovered())
 					ImGui::SetTooltip("Automatically shoots when an enemy is in your crosshair");
-				ImGui::SliderInt("Triggerbot Delay", &hacks::triggerDelay, 0, 5000);
+				ImGui::SliderInt("Triggerbot Delay", &hacks::triggerDelay, 0, 500);
 				ImGui::EndTabItem();
 			}
 
