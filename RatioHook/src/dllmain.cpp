@@ -12,7 +12,6 @@
 #include "../headers/hooks.h"
 #include "../headers/netvar.h"
 #include "../headers/offsets.h"
-#include "../headers/hacks.h"
 #include "../valve/centity.h"
 #include "../ext/minhook/MinHook.h"
 #include "../valve/cusercmd.h"

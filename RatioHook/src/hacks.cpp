@@ -4,7 +4,6 @@
 
 #include "../headers/offsets.h"
 #include "../valve/centity.h"
-#include "../headers/hacks.h"
 
 
 void RevealRadar()

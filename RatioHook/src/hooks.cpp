@@ -10,23 +10,17 @@
 #include <intrin.h>
 #include <chrono>
 #include <stdexcept>
+#include <iostream>
+#include "modules/modules.h"
 
-
-    static int last_tick = 0;
-    static bool did_save = false;
-    static bool shotOnce = false;
-
-
+    
 void hooks::InitHooks()
 {
     MH_Initialize();
     std::cout << interfaces::clientMode << std::endl;
     std::cout << interfaces::studioRender << std::endl;
     std::cout << interfaces::materialSystem << std::endl;
-  //  std::cout << interfaces::modelRender << std::endl;
 
-    //DrawModelExecute
-  //  MH_CreateHook(memory::Get(interfaces::modelRender, 24), &DrawModelExecute, reinterpret_cast<void**>(&DrawModelExecuteOriginal);
     // AllocKeyValuesMemory hook
     MH_CreateHook(memory::Get(interfaces::keyValuesSystem, 2), &AllocKeyValuesMemory, reinterpret_cast<void**>(&AllocKeyValuesMemoryOriginal));
 
@@ -74,18 +68,17 @@ HRESULT __stdcall hooks::Reset(IDirect3DDevice9* device, D3DPRESENT_PARAMETERS* 
 
 void* __stdcall hooks::AllocKeyValuesMemory(const std::int32_t size) noexcept
 {
-    // if function is returning to speficied addresses, return nullptr to "bypass"
     if (const std::uint32_t address = reinterpret_cast<std::uint32_t>(_ReturnAddress());
         address == (memory::allocKeyValuesEngine) ||
         address == (memory::allocKeyValuesClient))
         return nullptr;
 
-    // return original
     return AllocKeyValuesMemoryOriginal(interfaces::keyValuesSystem, size);
 }
 
-bool __stdcall hooks::CreateMove(float frameTime, UserCmd* cmd) noexcept
+bool __stdcall hooks::CreateMove(float frameTime, CUserCmd* cmd) noexcept
 {
+    globals::localPlayer = interfaces::entityList->GetEntityFromIndex(interfaces::engine->GetLocalPlayerIndex());
     const bool result = CreateMoveOriginal(interfaces::clientMode, frameTime, cmd);
 
     if (!cmd || !cmd->commandNumber)
@@ -94,76 +87,22 @@ bool __stdcall hooks::CreateMove(float frameTime, UserCmd* cmd) noexcept
     if (result)
         interfaces::engine->SetViewAngles(cmd->viewAngles);
 
-    globals::localPlayer = interfaces::entityList->GetEntityFromIndex(interfaces::engine->GetLocalPlayerIndex());
-    if (globals::localPlayer && hacks::bunnyhop || !globals::localPlayer->IsAlive())
+    if (globals::localPlayer && hacks::bunnyhop && globals::localPlayer->IsAlive())
     {
-        if (!(*reinterpret_cast<int*>(globals::localPlayer + netvars2::m_fFlags) & 1))
-        {
-            cmd->buttons &= ~IN_JUMP;
-        }
+        modules::BunnyHop(cmd);
     }
-
-
 
     // TriggerBot Function
-    if (globals::localPlayer && hacks::triggerbot || !globals::localPlayer->IsAlive()) {
-        if (!GetAsyncKeyState(VK_XBUTTON2) & 1) {
-            return false;
-        }
-        else {
-            CVector eyePosition;
-            globals::localPlayer->GetEyePosition(eyePosition);
-
-            CVector aimPunch;
-            globals::localPlayer->GetAimPunch(aimPunch);
-
-            const CVector dst = eyePosition + CVector{ cmd->viewAngles + aimPunch }.ToVector() * 8192.f;
-
-            CTrace trace;
-            interfaces::trace->TraceRay({ eyePosition, dst }, 0x46004009, globals::localPlayer, trace);
-
-            if (!trace.entity || !trace.entity->IsPlayer()) {
-                shotOnce = false;
-                did_save = false;
-                return false;
-            }
-
-            if (!trace.entity->IsAlive() || trace.entity->GetTeam() == globals::localPlayer->GetTeam()) {
-                return false;
-            }
-
-
-
-            int tickcount = GetTickCount64();
-            if (!did_save && trace.entity->IsPlayer()) {
-               // std::cout << "shotOnce1 : " << shotOnce << std::endl;
-                did_save = true;
-                last_tick = tickcount + hacks::triggerDelay;
-                
-            }
-
-            if (tickcount > last_tick) {
-                last_tick = 0;
-                tickcount = 0;
-            }
-
-            if (tickcount == last_tick && did_save && !shotOnce) {
-                cmd->buttons |= IN_ATTACK;
-                shotOnce = true;
-            }
-           
-             if (shotOnce && trace.entity->IsPlayer() && trace.entity->IsAlive() && did_save)
-            {
-                cmd->buttons |= IN_ATTACK;
-
-            }
-
-            
-
-        }
-        return false;
-
+    if (globals::localPlayer && hacks::triggerbot && globals::localPlayer->IsAlive())
+    {
+        modules::Triggerbot(cmd);
     }
+
+    if (globals::localPlayer && hacks::aimbot && globals::localPlayer->IsAlive())
+    {
+        modules::Aimbot(cmd);
+    }
+    return false;
 }
 
 
@@ -181,8 +120,8 @@ void __stdcall hooks::DrawModel(void* results, const CDrawModelInfo& info, CMatr
         {
             static IMaterial* material = interfaces::materialSystem->FindMaterial("debug/debugambientcube");
 
-           // constexpr float hidden[3] = { 0.f, 1.f, 1.f };
-           // constexpr float visible[3] = { 1.f, 0.f, 1.f };
+            // constexpr float hidden[3] = { 0.f, 1.f, 1.f };
+            // constexpr float visible[3] = { 1.f, 0.f, 1.f };
 
             interfaces::studioRender->SetAlphaModulation(1.f);
 
@@ -194,11 +133,11 @@ void __stdcall hooks::DrawModel(void* results, const CDrawModelInfo& info, CMatr
                 DrawModelOriginal(interfaces::studioRender, results, info, bones, flexWeights, flexDelayedWeights, modelOrigin, flags);
             }
             // visible
-                material->SetMaterialVarFlag(IMaterial::IGNOREZ, false);
-                interfaces::studioRender->SetColorModulation(hacks::chamsColorVisible);
-                interfaces::studioRender->ForcedMaterialOverride(material);
-                DrawModelOriginal(interfaces::studioRender, results, info, bones, flexWeights, flexDelayedWeights, modelOrigin, flags);
-            
+            material->SetMaterialVarFlag(IMaterial::IGNOREZ, false);
+            interfaces::studioRender->SetColorModulation(hacks::chamsColorVisible);
+            interfaces::studioRender->ForcedMaterialOverride(material);
+            DrawModelOriginal(interfaces::studioRender, results, info, bones, flexWeights, flexDelayedWeights, modelOrigin, flags);
+
             //reset
             return interfaces::studioRender->ForcedMaterialOverride(nullptr);
         }

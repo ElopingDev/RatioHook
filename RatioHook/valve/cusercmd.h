@@ -5,6 +5,9 @@ struct Vector
 	float x, y, z;
 };
 
+class CUserCmd
+{
+public:
 enum CommandButtons : int
 {
     IN_ATTACK = (1 << 0),
@@ -34,9 +37,6 @@ enum CommandButtons : int
     IN_SECOND_GRENADE = (1 << 24),
     IN_MIDDLE_ATTACK = (1 << 25)
 };
-
-struct UserCmd
-{
     void* vmt;
     std::int32_t commandNumber;
     std::int32_t tickCount;
