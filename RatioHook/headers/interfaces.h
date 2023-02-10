@@ -5,6 +5,9 @@
 #include "../valve/ienginetraceclient.h"
 #include "../valve/istudiorenderer.h"
 #include "../valve/imaterialsystem.h"
+#include "../valve/iglobalvars.h"
+#include "../valve/ibaseclientdll.h"
+
 
 namespace interfaces
 {
@@ -18,6 +21,8 @@ namespace interfaces
 	inline IEngineTraceClient* trace = nullptr;
 	inline IMaterialSystem* materialSystem = nullptr;
 	inline IStudioRender* studioRender = nullptr;
+	inline IGlobalVars* globalvars = nullptr;
+	inline IBaseClientDLL* bclient = nullptr;
 
 	inline void* client = nullptr;
 	inline void* clientMode = nullptr;

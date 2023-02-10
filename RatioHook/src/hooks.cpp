@@ -84,9 +84,7 @@ bool __stdcall hooks::CreateMove(float frameTime, CUserCmd* cmd) noexcept
     if (!cmd || !cmd->commandNumber)
         return result;
 
-    if (result)
-        interfaces::engine->SetViewAngles(cmd->viewAngles);
-
+ 
     if (globals::localPlayer && hacks::bunnyhop && globals::localPlayer->IsAlive())
     {
         modules::BunnyHop(cmd);
@@ -102,6 +100,10 @@ bool __stdcall hooks::CreateMove(float frameTime, CUserCmd* cmd) noexcept
     {
         modules::Aimbot(cmd);
     }
+
+    if (result)
+        interfaces::engine->SetViewAngles(cmd->viewAngles);
+
     return false;
 }
 

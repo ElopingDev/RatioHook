@@ -3,6 +3,8 @@
 #include "../headers/netvar.h"
 #include "../headers/memory.h"
 #include "cvector.h"
+#include "cmatrix.h"
+#include "cclientclass.h"
 
 class CEntity
 {
@@ -64,7 +66,11 @@ public:
 		WEAPONTYPE_MELEE = 16
 	};
 
-
+public: // networkable virtual functions (+0x8)
+	constexpr CClientClass* GetClientClass() noexcept
+	{
+		return memory::Call<CClientClass*>(this + 0x8, 2);
+	}
 
 public:
 	constexpr std::int32_t GetTeam() noexcept
@@ -92,6 +98,11 @@ public:
 		return memory::Call<bool>(this, 158);
 	}
 
+	constexpr bool IsDormant() noexcept
+	{
+		return memory::Call<bool>(this + 0x8, 9);
+	}
+
 	constexpr void GetEyePosition(CVector& eyePositionOut) noexcept
 	{
 		memory::Call<void, CVector&>(this, 285, eyePositionOut);
@@ -102,11 +113,23 @@ public:
 		memory::Call<void, CVector&>(this, 346, aimPunchOut);
 	}
 
+	constexpr bool SetupBones(CMatrix3x4* out, std::int32_t max, std::int32_t mask, float currentTime) noexcept
+	{
+		return memory::Call<bool>(this + 0x4, 13, out, max, mask, currentTime);
+	}
+
+	
 	// Netvars
 	NETVAR(GetFlags, "CBasePlayer->m_fFlags", std::int32_t);
 	NETVAR(Spotted, "CBaseEntity->m_bSpotted", bool)
 	NETVAR(GetHealth, "CBaseEntity->m_iHealth", int)
-	NETVAR(IsDefusing, "CCSPlayer->m_bIsDefusing", bool)
+	NETVAR(IsDefusing, "DT_CSPlayer->m_bIsDefusing", bool)
+	NETVAR(GetClip, "CBaseCombatWeapon->m_iClip1", int)
+	NETVAR(IsScoped, "CCSPlayer->m_bIsScoped", bool)
+	NETVAR(HasGunGameImmunity, "CCSPlayer->m_bGunGameImmunity", bool)
+
+
+
 		const int& GetHP() const noexcept
 	{
 		return *reinterpret_cast<int*>(std::uintptr_t(this) + 0x100);

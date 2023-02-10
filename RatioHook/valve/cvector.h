@@ -25,6 +25,11 @@ public:
 		return { x * scale, y * scale, z * scale };
 	}
 
+	constexpr CVector Scale(float factor) const noexcept
+	{
+		return { x * factor, y * factor, z * factor };
+	}
+
 	// convert angles -> vector
 	CVector ToVector() const noexcept
 	{
@@ -32,6 +37,15 @@ public:
 			std::cos(Deg2Rad(x)) * std::cos(Deg2Rad(y)),
 			std::cos(Deg2Rad(x)) * std::sin(Deg2Rad(y)),
 			-std::sin(Deg2Rad(x))
+		};
+	}
+
+	inline CVector ToAngle() const noexcept
+	{
+		return {
+			std::atan2(-z, std::hypot(x, y)) * (180.0f / std::numbers::pi_v<float>),
+			std::atan2(y, x) * (180.0f / std::numbers::pi_v<float>),
+			0.0f
 		};
 	}
 

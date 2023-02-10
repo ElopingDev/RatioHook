@@ -229,6 +229,17 @@ void gui::Render() noexcept
 					ImGui::SetTooltip("Automatically bunnyhops when you hold space");
 				ImGui::EndTabItem();
 			}
+
+			if (ImGui::BeginTabItem("Aimbot"))
+			{
+				ImGui::Checkbox("Aimbot", &hacks::aimbot);
+				if (ImGui::IsItemHovered())
+					ImGui::SetTooltip("Automatically aim for you when you shoot.");
+				ImGui::InputFloat("FOV", &hacks::fov, 0.1f, 360.0f);
+				ImGui::InputFloat("Smoothing", &hacks::smoothing, 0.f, 100.f);
+				ImGui::EndTabItem();
+			}
+
 			if (ImGui::BeginTabItem("Triggerbot"))
 			{
 				ImGui::Checkbox("Triggerbot", &hacks::triggerbot);

@@ -12,6 +12,9 @@ namespace hacks
 	inline bool triggerbot = false;
 	inline int triggerDelay = 0; 
 	inline bool walls = false;
+	inline float fov = 1.7f;
+	inline float smoothing = 0.2f;
+
 	
 }
 
